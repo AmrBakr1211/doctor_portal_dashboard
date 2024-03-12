@@ -1,0 +1,16 @@
+{
+  "appName": "",
+  "someThingWrongWithUrl": "SomeThing Wrong With Url",
+  "poweredBy": "Powered by",
+  "loading": "Loading",
+  "enterYourId": "Enter Your Id",
+  "enterYourPassword": "Enter Your Password",
+  "login": "Login",
+  "allowAppToSendNotifications": "Allow App To Send Notifications",
+  "accept": "Accept",
+  "cancel": "Cancel",
+  "userIdMustBeNotEmpty":"Your Id Must Be Not Empty",
+  "passwordMustBeNotEmpty":"Your Password Must Be Not Empty",
+  "validateRequired": "* {name} Required",
+  "validateAtLeastDigits": "* {name} must be at least {number} digits"
+}
