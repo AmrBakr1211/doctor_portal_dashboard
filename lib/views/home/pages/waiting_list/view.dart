@@ -6,7 +6,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-
 import '../../components/search_box.dart';
 import 'components/item/grid.dart';
 
@@ -14,11 +13,11 @@ part 'components/header.dart';
 
 part 'components/item/item.dart';
 
-part 'platforms/mobile.dart';
-
-part 'platforms/tablet.dart';
-
-part 'platforms/web.dart';
+// part 'components/body/tablet.dart';
+//
+// part 'components/body/web.dart';
+//
+// part 'components/body/body.dart';
 
 class WaitingListPage extends StatefulWidget {
   static const route = "/waitingList";
@@ -38,25 +37,35 @@ class _WaitingListPageState extends State<WaitingListPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
-        children: [
-          _Header(),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: const Color(0xffF5F6FF)),
-                borderRadius: BorderRadius.circular(12),
+      padding: const EdgeInsets.all(2),
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(child: _Header()),
+          SliverToBoxAdapter(child: SizedBox(height: 2)),
+          if (Responsive.isTablet(context))
+            SliverGrid.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16.h,
+                mainAxisSpacing: 16.h,
+                childAspectRatio: .82.h,
               ),
-              child: Responsive(
-                mobile: _Mobile(),
-                tablet: _Tablet(),
-                web: _Web(),
-              ),
+              itemBuilder: (context, index) => _Item(),
+              itemCount: 10,
             ),
-          )
+          if (!Responsive.isTablet(context))
+            SliverPadding(
+                padding: EdgeInsetsDirectional.only(top: 16, bottom: 16, end: 16, start: 8),
+                sliver: SliverList.separated(
+                  separatorBuilder: (context, index) => Responsive.isWeb(context)
+                      ? Divider(
+                          color: Color(0xffDCE2E8),
+                        )
+                      : SizedBox.shrink(),
+                  itemBuilder: (context, index) => _Item(),
+                  itemCount: 10,
+                )),
+          // SliverFillRemaining(child: _Body()),
         ],
       ),
     );

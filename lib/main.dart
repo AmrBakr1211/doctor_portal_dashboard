@@ -68,10 +68,10 @@ class _MyAppState extends State<MyApp> {
             },
             builder: (context, state) {
               return MaterialApp(
-                initialRoute: CacheHelper.isAuthed ? HomeView.route : HomeView.route,
+                initialRoute: CacheHelper.isAuthed ? HomeView.route : LoginView.route,
                 navigatorKey: navigatorKey,
                 onGenerateRoute: (settings) {
-                  return getPageRoute(const HomeView(), name: HomeView.route);
+                  // return getPageRoute(const HomeView(), name: HomeView.route);
                   // return getPageRoute(const LoginView(), name: LoginView.route);
                   switch (settings.name) {
                     case LoginView.route:

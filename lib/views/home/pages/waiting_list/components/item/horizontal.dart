@@ -10,8 +10,11 @@ class ItemWaitingListHorizontal extends StatelessWidget {
     return Row(
       children: [
         Container(
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-          color: Theme.of(context).primaryColor,
+          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.circular(6)
+          ),
           child: Column(
             children: [
               CircleAvatar(
@@ -19,6 +22,8 @@ class ItemWaitingListHorizontal extends StatelessWidget {
                 child: ClipOval(
                   child: AppImage(
                     "",
+                    height: 24,
+                    width: 24,
                   ),
                 ),
               ),
@@ -43,14 +48,12 @@ class ItemWaitingListHorizontal extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.only(bottom: 2),
-              child: Center(
-                child: Text(
-                  "8 Y",
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xff121212),
-                  ),
+              child: Text(
+                "8 Y",
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xff121212),
                 ),
               ),
               padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
@@ -104,7 +107,6 @@ class ItemWaitingListHorizontal extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
-              mainAxisSize: MainAxisSize.min,
               children: [
                 AppImage("timer.svg"),
                 SizedBox(width: 2),

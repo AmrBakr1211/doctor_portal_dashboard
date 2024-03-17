@@ -1,4 +1,5 @@
 import 'package:app/core/design/responsive.dart';
+import 'package:app/views/home/components/copyright.dart';
 import 'package:app/views/home/pages/claims/view.dart';
 import 'package:app/views/home/pages/dashboard/view.dart';
 import 'package:app/views/home/pages/soon.dart';
@@ -9,7 +10,7 @@ import 'package:flutter/material.dart';
 
 import '../../routes.dart';
 import 'components/side_nav_bar.dart';
-import 'components/top_nav_bar.dart';
+import 'components/top_nav_bar/top_nav_bar.dart';
 import 'pages/forms/view.dart';
 
 class HomeView extends StatefulWidget {
@@ -26,17 +27,24 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Responsive(
-      mobile: HomeViewMobile(
-        sideNavBar: sideNavBar,
-        navigator: navigator,
-        topNavBar: topNavBar,
-      ),
-      web: HomeViewWeb(
-        navigator: navigator,
-        sideNavBar: sideNavBar,
-        topNavBar: topNavBar,
-      ),
+    return Column(
+      children: [
+        Expanded(
+          child: Responsive(
+            mobile: HomeViewMobile(
+              sideNavBar: sideNavBar,
+              navigator: navigator,
+              topNavBar: topNavBar,
+            ),
+            web: HomeViewWeb(
+              navigator: navigator,
+              sideNavBar: sideNavBar,
+              topNavBar: topNavBar,
+            ),
+          ),
+        ),
+        CopyRight()
+      ],
     );
   }
 
@@ -56,13 +64,13 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget get topNavBar {
-    return TopNavBar(navKey: navKey, title: currentTitle);
+    return TopNavBar(title: currentTitle);
   }
 
   Widget get navigator {
     return Navigator(
       key: navKey,
-      initialRoute: WaitingListPage.route,
+      initialRoute: DashBoardPage.route,
       reportsRouteUpdateToEngine: true,
       onGenerateRoute: (settings) {
         switch (settings.name) {

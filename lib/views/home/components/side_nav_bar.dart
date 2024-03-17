@@ -65,67 +65,67 @@ class _SideNavBarState extends State<SideNavBar> {
           )
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsetsDirectional.only(top: 32, start: 24, end: 24, bottom: 32),
-        child: Column(
-          children: [
-            const Center(
-              child: AppImage(
-                "logo.svg",
-                width: 74,
-                height: 96,
-              ),
+      child: Column(
+        children: [
+          const SizedBox(height: 32),
+          const Center(
+            child: AppImage(
+              "logo.svg",
+              width: 74,
+              height: 120,
+              fit: BoxFit.cover,
             ),
-            const SizedBox(height: 32),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: List.generate(
-                    list.length,
-                        (index) => Padding(
-                      padding: const EdgeInsetsDirectional.only(bottom: 4),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(10),
-                        onTap: () {
-                          selectedItem = index;
-                          setState(() {});
+          ),
+          const SizedBox(height: 4),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsetsDirectional.only(top: 16, start: 8, end: 16, bottom: 16),
+              child: Column(
+                children: List.generate(
+                  list.length,
+                      (index) => Padding(
+                    padding: const EdgeInsetsDirectional.only(bottom: 4),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () {
+                        selectedItem = index;
+                        setState(() {});
 
-                          widget.navKey.currentState!.pushNamed(list[index].route, arguments: list[index].title);
-                          if (!Responsive.isWeb(context)) {
-                            widget.onChange(index, list[selectedItem].title);
-                            Navigator.pop(context);
-                          }
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-                          decoration: BoxDecoration(
-                            color: selectedItem == index ? Theme.of(context).primaryColor : null,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              AppImage(
-                                list[index].icon,
-                                height: 20,
-                                width: 20,
-                                fit: BoxFit.fill,
-                                color: selectedItem == index ? Colors.white : const Color(0xff8A99AA),
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  list[index].title,
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: selectedItem == index ? Colors.white : const Color(0xff8A99AA),
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                        widget.navKey.currentState!.pushNamed(list[index].route, arguments: list[index].title);
+                        if (!Responsive.isWeb(context)) {
+                          widget.onChange(index, list[selectedItem].title);
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                        decoration: BoxDecoration(
+                          color: selectedItem == index ? Theme.of(context).primaryColor : null,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            AppImage(
+                              list[index].icon,
+                              height: 20,
+                              width: 20,
+                              fit: BoxFit.fill,
+                              color: selectedItem == index ? Colors.white : const Color(0xff8A99AA),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                list[index].title,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: selectedItem == index ? Colors.white : const Color(0xff8A99AA),
+                                  fontWeight: FontWeight.w600,
                                 ),
-                              )
-                            ],
-                          ),
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
@@ -133,8 +133,8 @@ class _SideNavBarState extends State<SideNavBar> {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
