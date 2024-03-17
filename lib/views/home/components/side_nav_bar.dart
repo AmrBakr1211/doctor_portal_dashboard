@@ -1,10 +1,11 @@
+import 'package:app/core/design/app_image.dart';
+import 'package:app/core/design/responsive.dart';
 import 'package:app/views/home/pages/claims/view.dart';
 import 'package:app/views/home/pages/dashboard/view.dart';
 import 'package:app/views/home/pages/forms/view.dart';
 import 'package:app/views/home/pages/waiting_list/view.dart';
 import 'package:flutter/material.dart';
-import 'package:app/core/design/app_image.dart';
-import 'package:app/core/design/responsive.dart';
+
 import '../pages/soon.dart';
 
 class SideNavBar extends StatefulWidget {

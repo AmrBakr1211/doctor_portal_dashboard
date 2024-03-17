@@ -22,43 +22,24 @@ class _ValuablesState extends State<_Valuables> {
           (index) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: () {
-                  choose(index);
-                },
-                child: Container(
-                  color: Colors.transparent,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Radio(
-                        value: selectedIndex,
-                        groupValue: index,
-                        toggleable: false,
-                        visualDensity: VisualDensity.compact,
-                        onChanged: (value) {
-                          choose(index);
-                        },
-                      ),
-                      Text(list[index])
-                    ],
-                  ),
-                ),
-              ),
+            AppRadio(
+            title: list[index],
+            index: index,
+            selectedIndex: selectedIndex,
+            onChange: (value) {
+              selectedIndex = value;
+              setState(() {});
+            },
+          ),
               if ( selectedIndex == index)
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: TextFormField(),
+                FormInput(
+                  marginBottom: 24,
+                  hintText: "Add note here",
                 )
             ],
           ),
         ),
       ),
     );
-  }
-
-  void choose(index) {
-    selectedIndex = index;
-    setState(() {});
   }
 }

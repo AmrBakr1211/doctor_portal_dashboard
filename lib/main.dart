@@ -13,8 +13,6 @@ import 'core/logic/helper_methods.dart';
 import 'features/auth/toggle_lang/bloc.dart';
 import 'features/kiwi.dart';
 import 'routes.dart';
-import 'views/auth/otp/view.dart';
-import 'views/auth/register/view.dart';
 import 'views/home/view.dart';
 
 Future<void> main() async {
@@ -70,37 +68,21 @@ class _MyAppState extends State<MyApp> {
             },
             builder: (context, state) {
               return MaterialApp(
-                initialRoute: CacheHelper.isAuthed?HomeView.route:LoginView.route,
+                initialRoute: CacheHelper.isAuthed ? HomeView.route : HomeView.route,
                 navigatorKey: navigatorKey,
                 onGenerateRoute: (settings) {
-                  // return getPageRoute(const HomeView(), name: HomeView.route);
+                  return getPageRoute(const HomeView(), name: HomeView.route);
                   // return getPageRoute(const LoginView(), name: LoginView.route);
                   switch (settings.name) {
-                    // case FormsView.route:
-                    //   return getPageRoute(const FormsView(), name: FormsView.route);
                     case LoginView.route:
                       return getPageRoute(const LoginView(), name: LoginView.route);
-                    // case RegisterView.route:
-                    //   return getPageRoute(const RegisterView(), name: RegisterView.route);
-                    // case OTPView.route:
-                    //   if (settings.arguments != null) {
-                    //     final args = settings.arguments as OTPArguments;
-                    //     return getPageRoute(
-                    //         OTPView(
-                    //           args: args,
-                    //         ),
-                    //         name: OTPView.route);
-                    //   } else {
-                    //     return AppRoutes.errorRoute("From Main Navigator${settings.name ?? "NUll"}");
-                    //   }
-
                     case HomeView.route:
                       return getPageRoute(const HomeView(), name: HomeView.route);
                     default:
                       return AppRoutes.errorRoute("From Main Navigator${settings.name ?? "NUll"}");
                   }
                 },
-                title: context.locale.languageCode == "en" ? 'Patient Portal' : "مستشفى عبد اللطيف جميل",
+                title: context.locale.languageCode == "en" ? 'Doctor Portal' : "مستشفى عبد اللطيف جميل",
                 debugShowCheckedModeBanner: false,
                 localizationsDelegates: context.localizationDelegates,
                 supportedLocales: context.supportedLocales,

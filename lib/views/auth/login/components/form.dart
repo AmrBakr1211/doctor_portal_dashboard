@@ -1,16 +1,12 @@
+import 'package:app/core/logic/helper_methods.dart';
 import 'package:app/views/home/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:app/core/design/responsive.dart';
-import 'package:app/core/logic/helper_methods.dart';
-import 'package:app/core/logic/input_validator.dart';
-import 'package:app/views/auth/otp/view.dart';
 
 import '../../../../core/design/app_button.dart';
 import '../../../../core/design/app_image.dart';
 import '../../../../core/design/app_input.dart';
-import '../../../../core/design/have_account_or_not.dart';
 import '../../../../features/auth/sign_in/bloc.dart';
 import '../../components/logo.dart';
 
@@ -43,17 +39,18 @@ class _LoginFormState extends State<LoginForm> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     AppInput(
-                      label: "FileNum  / Id Number",
-                      hint: "Enter FileNum or Iqama-Id Number",
+                      label: "ID",
+                      hint: "Enter your id",
                       controller: bloc.userIdController,
-                      validator: bloc.validateUserId,
+                      // validator: InputValidator.validatePhone,
                     ),
                     AppInput(
-                      label: "Mobile Number",
-                      hint: "Enter Mobile Number",
-                      controller: bloc.phoneController,
-                      validator: InputValidator.validatePhone,
+                      label: "Password",
+                      hint: "Enter your password",
+                      controller: bloc.passwordController,
+                      // validator: bloc.validateUserId,
                     ),
+
                   ],
                 ),
               ),

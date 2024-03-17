@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/logic/cache_helper.dart';
 import '../../../core/logic/dio_helper.dart';
 import '../../../core/logic/helper_methods.dart';
-import '../../../core/logic/text_helper.dart';
+import '../../../views/home/view.dart';
 
 part 'events.dart';
 part 'model.dart';
@@ -15,37 +15,35 @@ class SignInBloc extends Bloc<SignInEvents, SignInStates> {
   final DioHelper _dio;
   final formKey = GlobalKey<FormState>();
   AutovalidateMode validateMode = AutovalidateMode.disabled;
+  // final userIdController = TextEditingController(text: CacheHelper.isRememberChecked ? CacheHelper.sysCode : "");
+  final userIdController = TextEditingController(text: "236");
+  // final passwordController = TextEditingController();
+  final passwordController = TextEditingController(text: "123456");
+  bool isRememberChecked = CacheHelper.isRememberChecked;
 
   SignInBloc(this._dio) : super(SignInStates()) {
     on<SignInEvent>(_sendData);
   }
-  final userIdController = TextEditingController(text: "2356445045");
-  final phoneController = TextEditingController(text: "0565102258");
-  bool isRememberChecked = CacheHelper.isRememberChecked;
 
   void _sendData(
-    SignInEvent event,
-    Emitter<SignInStates> emit,
-  ) async {
+      SignInEvent event,
+      Emitter<SignInStates> emit,
+      ) async {
     if (formKey.currentState!.validate()) {
       emit(SignInLoadingState());
       final response = await _dio.send(
-        "api/Authorization/PatientAuthentication",
-        data: {
-          "PatientId": "0",
-          "logintype": userIdController.text.length < 10 ? "mrn" : "id",
-          "logincode": userIdController.text,
-          "loginphone": phoneController.text,
-          "fbToken": "",
-          "typeofDevice": "web",
-          "Lang": CacheHelper.lang.toUpperCase()
-        },
+        "api/DoctorsClinicManagement/Login",
+        data: {"Code": userIdController.text, "Password": passwordController.text},
       );
-      print(response.data);
       if (response.isSuccess) {
-        final model = UserModel.fromJson(response.data["data"]);
-        await CacheHelper.saveData(model);
-        emit(SignInSuccessState(msg: response.msg, otp: model.randCode, phone: phoneController.text));
+        final model = UserData.fromJson(response.data).userModel;
+        if (model != null) {
+          model.isRememberChecked = isRememberChecked;
+          await CacheHelper.saveData(model);
+          emit(SignInSuccessState(msg: response.msg));
+        } else {
+          emit(SignInFailedState(msg: response.msg, statusCode: response.statusCode));
+        }
       } else {
         emit(SignInFailedState(msg: response.msg, statusCode: response.statusCode));
       }
@@ -54,10 +52,4 @@ class SignInBloc extends Bloc<SignInEvents, SignInStates> {
     }
   }
 
-  String? validateUserId(String? value) {
-    if (value!.isEmpty) {
-      return "FileNum  / Id Number Must Be Not Empty";
-    }
-    return null;
-  }
 }

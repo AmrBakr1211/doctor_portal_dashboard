@@ -1,6 +1,6 @@
 import 'package:app/core/design/responsive.dart';
-import 'package:flutter/material.dart';
 import 'package:app/views/auth/login/components/form.dart';
+import 'package:flutter/material.dart';
 
 class LoginView extends StatelessWidget {
   static const route = "/login";

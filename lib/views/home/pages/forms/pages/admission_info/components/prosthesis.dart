@@ -9,7 +9,7 @@ class _Prosthesis extends StatefulWidget {
 
 class _ProsthesisState extends State<_Prosthesis> {
   int selectedIndex = 0;
-  final list = ["Glasses", "hearing Aid", "Upper Denture", "Lower Denture ", "Other","None"];
+  final list = ["Glasses", "Hearing Aid", "Upper Denture", "Lower Denture", "None", "Other"];
 
   @override
   Widget build(BuildContext context) {
@@ -22,43 +22,24 @@ class _ProsthesisState extends State<_Prosthesis> {
           (index) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: () {
-                  choose(index);
+              AppRadio(
+                title: list[index],
+                index: index,
+                selectedIndex: selectedIndex,
+                onChange: (value) {
+                  selectedIndex = value;
+                  setState(() {});
                 },
-                child: Container(
-                  color: Colors.transparent,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Radio(
-                        value: selectedIndex,
-                        groupValue: index,
-                        toggleable: false,
-                        visualDensity: VisualDensity.compact,
-                        onChanged: (value) {
-                          choose(index);
-                        },
-                      ),
-                      Text(list[index])
-                    ],
-                  ),
-                ),
               ),
-              if (index == list.length - 2 && selectedIndex == index)
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: TextFormField(),
+              if (index == list.length - 1 && selectedIndex == index)
+                FormInput(
+                  marginBottom: 24,
+                  hintText: "Add note here",
                 )
             ],
           ),
         ),
       ),
     );
-  }
-
-  void choose(index) {
-    selectedIndex = index;
-    setState(() {});
   }
 }

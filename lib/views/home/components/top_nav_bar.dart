@@ -1,15 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kiwi/kiwi.dart';
 import 'package:app/core/design/app_image.dart';
-import 'package:app/core/design/app_loading.dart';
 import 'package:app/core/design/responsive.dart';
 import 'package:app/core/logic/cache_helper.dart';
-import 'package:app/features/home/notifications/bloc.dart';
+import 'package:flutter/material.dart';
 
-import '../pages/dashboard/view.dart';
-import 'item_notifications.dart';
 import 'search_box.dart';
 
 class TopNavBar extends StatefulWidget {
@@ -140,48 +133,48 @@ class _TopNavBarState extends State<TopNavBar> {
     );
   }
 
-  Future<void> _showMenu(context, List<MyNotificationModel> list) async {
-    final RenderBox renderBox = context.findRenderObject() as RenderBox;
-    final offset = renderBox.localToGlobal(Offset.zero);
-    final left = offset.dx;
-    final top = offset.dy + renderBox.size.height;
-    final right = left + renderBox.size.width;
-    await showMenu(
-      context: context,
-      color: Colors.white,
-      surfaceTintColor: Colors.white,
-      position: RelativeRect.fromDirectional(
-        textDirection: TextDirection.ltr,
-        start: 1,
-        top: top + 8,
-        end: 0,
-        bottom: 0,
-      ),
-      // position: RelativeRect.fromLTRB(left, top, right, 0),
-      constraints: BoxConstraints(
-        minWidth: MediaQuery.of(context).size.width / 2,
-        maxWidth: MediaQuery.of(context).size.width / 2,
-        minHeight: 150.h,
-        maxHeight: MediaQuery.of(context).size.height * .70,
-      ),
-      items: list.isEmpty
-          ? [
-              PopupMenuItem(
-                onTap: () {},
-                value: 0,
-                child: const Center(
-                  child: Text("No Notifications"),
-                ),
-              )
-            ]
-          : List.generate(
-              list.length,
-              (index) => PopupMenuItem(
-                onTap: () {},
-                value: index,
-                child: ItemNotification(model: list[index]),
-              ),
-            ),
-    );
-  }
+  // Future<void> _showMenu(context, List<MyNotificationModel> list) async {
+  //   final RenderBox renderBox = context.findRenderObject() as RenderBox;
+  //   final offset = renderBox.localToGlobal(Offset.zero);
+  //   final left = offset.dx;
+  //   final top = offset.dy + renderBox.size.height;
+  //   final right = left + renderBox.size.width;
+  //   await showMenu(
+  //     context: context,
+  //     color: Colors.white,
+  //     surfaceTintColor: Colors.white,
+  //     position: RelativeRect.fromDirectional(
+  //       textDirection: TextDirection.ltr,
+  //       start: 1,
+  //       top: top + 8,
+  //       end: 0,
+  //       bottom: 0,
+  //     ),
+  //     // position: RelativeRect.fromLTRB(left, top, right, 0),
+  //     constraints: BoxConstraints(
+  //       minWidth: MediaQuery.of(context).size.width / 2,
+  //       maxWidth: MediaQuery.of(context).size.width / 2,
+  //       minHeight: 150.h,
+  //       maxHeight: MediaQuery.of(context).size.height * .70,
+  //     ),
+  //     items: list.isEmpty
+  //         ? [
+  //             PopupMenuItem(
+  //               onTap: () {},
+  //               value: 0,
+  //               child: const Center(
+  //                 child: Text("No Notifications"),
+  //               ),
+  //             )
+  //           ]
+  //         : List.generate(
+  //             list.length,
+  //             (index) => PopupMenuItem(
+  //               onTap: () {},
+  //               value: index,
+  //               child: ItemNotification(model: list[index]),
+  //             ),
+  //           ),
+  //   );
+  // }
 }

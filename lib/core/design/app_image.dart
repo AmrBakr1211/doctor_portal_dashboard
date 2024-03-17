@@ -4,27 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum FailedImageType { normal, doctor, patientMale, patientFemale }
+enum FailedImageType { normal, male, female }
 
 class AppImage extends StatelessWidget {
   final FailedImageType failedImageType;
   final bool isClickable;
-
   final String url;
   final double? height, width;
   final Color? color;
   final BoxFit fit;
 
   const AppImage(
-    this.url, {
-    super.key,
-    this.height,
-    this.isClickable = false,
-    this.width,
-    this.color,
-    this.fit = BoxFit.scaleDown,
-    this.failedImageType = FailedImageType.normal,
-  });
+      this.url, {
+        super.key,
+        this.height,
+        this.isClickable = false,
+        this.width,
+        this.color,
+        this.fit = BoxFit.scaleDown,
+        this.failedImageType = FailedImageType.normal,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +43,7 @@ class AppImage extends StatelessWidget {
         color: color,
         fit: fit,
       );
-    } else if (url.startsWith("/") || url.startsWith("memory")) {
+    } else if (url.startsWith("/") || url.length > 200) {
       return AbsorbPointer(
         absorbing: !isClickable,
         child: GestureDetector(
@@ -52,7 +51,7 @@ class AppImage extends StatelessWidget {
             showImage(context);
           },
           child: Image.memory(
-            base64Decode(url.startsWith("memory") ? url.replaceFirst("memory", "") : url),
+            base64Decode(url),
             height: height,
             width: width,
             color: color,
@@ -66,6 +65,7 @@ class AppImage extends StatelessWidget {
       }
       return Image.asset(
         "assets/images/$url",
+        color: color,
         errorBuilder: (context, error, stackTrace) => errWidget,
         width: width,
         height: height,
@@ -102,19 +102,17 @@ class AppImage extends StatelessWidget {
 
   Widget get errWidget => Image.asset(
     "assets/images/$_errorImage",
-        height: height,
-        width: width,
-        fit: BoxFit.scaleDown,
-      );
+    height: height,
+    width: width,
+    fit: BoxFit.scaleDown,
+  );
 
   String get _errorImage {
     switch (failedImageType) {
-      case FailedImageType.doctor:
-        return "doctor_failed.png";
-      case FailedImageType.patientFemale:
-        return "female_failed.png";
-      case FailedImageType.patientMale:
+      case FailedImageType.male:
         return "male_failed.png";
+      case FailedImageType.female:
+        return "female_failed.png";
       default:
         return "normal_failed.png";
     }

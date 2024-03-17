@@ -1,13 +1,12 @@
-import 'package:app/views/home/pages/claims/view.dart';
-import 'package:app/views/home/pages/waiting_list/view.dart';
-import 'package:flutter/material.dart';
 import 'package:app/core/design/responsive.dart';
+import 'package:app/views/home/pages/claims/view.dart';
 import 'package:app/views/home/pages/dashboard/view.dart';
 import 'package:app/views/home/pages/soon.dart';
+import 'package:app/views/home/pages/waiting_list/view.dart';
 import 'package:app/views/home/platforms/mobile.dart';
 import 'package:app/views/home/platforms/web.dart';
+import 'package:flutter/material.dart';
 
-import '../../core/design/app_image.dart';
 import '../../routes.dart';
 import 'components/side_nav_bar.dart';
 import 'components/top_nav_bar.dart';
@@ -63,7 +62,7 @@ class _HomeViewState extends State<HomeView> {
   Widget get navigator {
     return Navigator(
       key: navKey,
-      initialRoute: DashBoardPage.route,
+      initialRoute: WaitingListPage.route,
       reportsRouteUpdateToEngine: true,
       onGenerateRoute: (settings) {
         switch (settings.name) {

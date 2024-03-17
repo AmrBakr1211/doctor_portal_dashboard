@@ -1,7 +1,7 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/auth/sign_in/bloc.dart';
+
 
 class CacheHelper {
   static late SharedPreferences _ref;
@@ -9,54 +9,64 @@ class CacheHelper {
   static Future<void> init() async {
     _ref = await SharedPreferences.getInstance();
   }
-
+  static String get profileName {
+    final list = name.split(" ");
+    return list.first + " " + list.last;
+  }
   static String get lang {
     return _ref.getString("lang") ?? "en";
   }
 
-  static String get forDate {
-    String date = _ref.getString("forDate") ?? "";
-    final dateTime = DateTime.parse("2020-09-26T18:14:00");
+  static int get sysID {
+    return _ref.getInt("sysID") ?? 0;
+  }
 
-    print(date);
-    if (date.isNotEmpty) {
-      return DateFormat.yMd().add_jm().format(dateTime);
-    }
-    return date;
+  static String get sysCode {
+    return _ref.getString("sysCode") ?? "";
+  }
+
+  static int get docID {
+    return _ref.getInt("docID") ?? 0;
   }
 
   static bool get isAuthed {
     return _ref.getBool("isAuthed") ?? false;
   }
 
+  static String get docCode {
+    return _ref.getString("docCode") ?? "";
+  }
+
   static String get name {
-    return lang == "en" ? _engName : _arabName;
+    return lang == "en" ? _docEngName : _docArbName;
   }
 
-  static String get profileName {
-    if(name.isEmpty)return "Mohamed Tarek";
-    final list = name.split(" ");
-    return "${list.first} ${list.last}";
+  static String get spec {
+    return lang == "en" ? _specEngName : _specArbName;
   }
 
-  static String get _engName {
-    return _ref.getString("engName") ?? "";
+  static String get _docEngName {
+    return _ref.getString("docEngName") ?? "";
   }
 
-  static int get id {
-    return _ref.getInt("id") ?? 0;
-  }
-
-  static String get _arabName {
-    return _ref.getString("arabName") ?? "";
+  static String get _docArbName {
+    return _ref.getString("docArbName") ?? "";
   }
 
   static String get image {
-    return _ref.getString("image") ?? "https://www.dmarge.com/wp-content/uploads/2021/01/dwayne-the-rock-.jpg";
+    return _ref.getString("image") ?? "";
+  }
+
+  static String get _specArbName {
+    return _ref.getString("specArbName") ?? "";
   }
 
   static bool get isRememberChecked {
     return _ref.getBool("isRememberChecked") ?? false;
+  }
+
+  static String get _specEngName {
+    return _ref.getString("specEngName") ?? "";
   }
 
   static Future<void> setLang(String lang) async {
@@ -64,69 +74,24 @@ class CacheHelper {
   }
 
   static Future<void> saveData(UserModel model) async {
-    // todo: need notification while changing the patient vital signs i will listen for specific topic form the server
-    _ref.setBool("isAuth", true);
-    _ref.setInt("id", model.id);
+    _ref.setBool("isAuthed", true);
+    _ref.setInt("sysID", model.sysID);
+    _ref.setString("sysCode", model.sysCode);
+    _ref.setInt("docID", model.docID);
+    _ref.setString("docCode", model.docCode);
+    _ref.setString("docEngName", model.docEngName);
+    _ref.setString("docArbName", model.docArbName);
     _ref.setString("image", model.image);
-    _ref.setString("arabName", model.arbName);
-    _ref.setString("engName", model.engName);
-    _ref.setInt("id", model.id);
-    _ref.setInt("fileNum", model.fileNum);
-    _ref.setString("fileNum", model.telephone);
-    _ref.setString("telephone", model.identityNo);
-    _ref.setString("gender", model.gender);
-    _ref.setBool("isInsurance", model.isInsurance);
-    _ref.setBool("isValid", model.isValid);
-    _ref.setString("address", model.address);
-    _ref.setDouble("pulse", model.vitalSigns.pulse);
-    _ref.setDouble("temperature", model.vitalSigns.temperature);
-    _ref.setDouble("lowBloodPressure", model.vitalSigns.lowBloodPressure);
-    _ref.setDouble("heightBloodPressure", model.vitalSigns.heightBloodPressure);
-    _ref.setDouble("oxygenSaturation", model.vitalSigns.oxygenSaturation);
-    _ref.setDouble("weight", model.vitalSigns.weight);
-    _ref.setDouble("height", model.vitalSigns.height);
-    _ref.setDouble("respiratoryRate", model.vitalSigns.respiratoryRate);
-    _ref.setString("forDate", model.vitalSigns.forDate);
+    _ref.setString("specArbName", model.specArbName);
+    _ref.setString("specEngName", model.specEngName);
+    _ref.setBool("isRememberChecked", model.isRememberChecked);
   }
-
 
   static Future<void> logOut() async {
+    bool isRememberCheck = isRememberChecked;
+    String sysCodeNew = sysCode;
     await _ref.clear();
-  }
-
-  static double get pulse {
-    return _ref.getDouble("pulse") ?? 0;
-  }
-
-  static double get temperature {
-    return _ref.getDouble("temperature") ?? 37.4;
-  }
-
-  static double get lowBloodPressure {
-    return _ref.getDouble("lowBloodPressure") ?? 80;
-  }
-
-  static double get heightBloodPressure {
-    return _ref.getDouble("heightBloodPressure") ?? 120;
-  }
-
-  static double get oxygenSaturation {
-    return _ref.getDouble("oxygenSaturation") ?? 99;
-  }
-
-  static double get weight {
-    return _ref.getDouble("weight") ?? 86.2;
-  }
-  static bool get isMale {
-    return (_ref.getString("gender") ?? "M")=="M";
-  }
-
-
-  static double get height {
-    return _ref.getDouble("height") ?? 184;
-  }
-
-  static double get respiratoryRate {
-    return _ref.getDouble("respiratoryRate") ?? 77;
+    _ref.setBool("isRememberChecked", isRememberCheck);
+    _ref.setString("sysCode", sysCodeNew);
   }
 }

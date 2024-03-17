@@ -14,14 +14,11 @@ class SignInFailedState extends SignInStates {
 }
 
 class SignInSuccessState extends SignInStates {
-  final String msg,otp,phone;
-
+  final String msg;
 
   SignInSuccessState({
     required this.msg,
-    required this.otp,
-    required this.phone,
-  }) ;
-
-
+  }) {
+    navigateTo(HomeView.route, keepHistory: false);
+  }
 }

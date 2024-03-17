@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:app/core/logic/helper_methods.dart';
-import 'package:app/views/auth/login/view.dart';
 import 'package:quick_log/quick_log.dart';
+
+import '../../views/auth/login/view.dart';
+import 'cache_helper.dart';
+import 'helper_methods.dart';
 
 enum APIMethods { post, put, delete }
 
@@ -13,9 +15,9 @@ class DioHelper {
     BaseOptions(
       receiveDataWhenStatusError: true,
       baseUrl: "https://eservices.aljhospital.com:4438/",
-      connectTimeout: const Duration(seconds: 7),
-      receiveTimeout: const Duration(seconds: 7),
-      sendTimeout: const Duration(seconds: 7),
+      // connectTimeout: const Duration(seconds: 30),
+      // receiveTimeout: const Duration(seconds: 30),
+      // sendTimeout: const Duration(seconds: 30),
       headers: {"Accept": "application/json"},
     ),
   );
@@ -46,26 +48,24 @@ class DioHelper {
   }
 
   Future<CustomResponse> send(
-    String path, {
-    Map<String, dynamic>? data,
-    APIMethods method = APIMethods.post,
-  }) async {
+      String path, {
+        Map<String, dynamic>? data,
+        APIMethods method = APIMethods.post,
+      }) async {
     if (path.isEmpty) {
       return fakeCase();
     } else {
       try {
         final resp = await getResponse(path, data, method);
 
-        if ([204, 500, 403].contains(resp.data["code"])) {
+        if ([204, 500].contains(resp.data["code"])) {
           return CustomResponse(
-              data: resp.data,
-              msg: resp.data["error_message"],
-              statusCode: resp.data["code"]);
+              data: resp.data, msg: resp.data["error_message"]);
         }
         return CustomResponse(
           data: resp.data,
           isSuccess: true,
-          msg: "Success",
+          msg: resp.data["error_message"] ?? "Success",
         );
       } on DioException catch (ex) {
         return handleServerError(ex);
@@ -115,19 +115,15 @@ class CustomResponse {
 class CustomApiInterceptor extends Interceptor {
   final log = const Logger("");
 
-  // String username = 'TestEnvironments';
+  String username = 'TestEnvironments';
 
-  String username = 'ALJSecretkey';
+  // String username = 'ALJSecretkey';
   String password = 'ZGF0YW9jZWFuQDIwMjI=';
 
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     super.onRequest(options, handler);
-    // if(CacheHelper.id ==0)
-    // {
-    //   navigateTo(AuthView.route);
-    // }
     log.info("*" * 40);
     log.info("onRequest");
     options.headers.addAll({
@@ -177,13 +173,13 @@ class CustomApiInterceptor extends Interceptor {
 
 abstract class NetworkExceptions {
   static String? handleResponse(Response response) {
-
     int statusCode = response.statusCode ?? 0;
     switch (statusCode) {
       case 400:
       case 401:
       case 403:
-        navigateTo(LoginView.route);
+        CacheHelper.logOut();
+        navigateTo(LoginView.route, keepHistory: false);
         return "Unauthorized request. Please log in again.";
       case 404:
         return "Requested resource not found.";
@@ -207,39 +203,42 @@ abstract class NetworkExceptions {
         if (error is DioException) {
           switch (error.type) {
             case DioExceptionType.cancel:
-              errorMessage = "Request cancelled.";
+            // errorMessage = "Request cancelled.";
+              errorMessage = "Contact Administrator";
               break;
             case DioExceptionType.badCertificate:
-              errorMessage = "Bad Certificate";
+              errorMessage = "Contact Administrator";
+              // errorMessage = "Bad Certificate";
               break;
             case DioExceptionType.connectionError:
-              errorMessage = "No internet connection.";
+              errorMessage = "No internet connection";
               break;
             case DioExceptionType.sendTimeout:
-              errorMessage =
-                  "Send timeout in connection with API server. Please try again later.";
+              errorMessage = "Contact Administrator";
+              // errorMessage = "Send timeout in connection with API server. Please try again later.";
               break;
             case DioExceptionType.receiveTimeout:
-              errorMessage =
-                  "Send timeout in connection with API server. Please try again later.";
+              errorMessage = "Contact Administrator";
+              // errorMessage = "Send timeout in connection with API server. Please try again later.";
               break;
             case DioExceptionType.connectionTimeout:
-              errorMessage =
-                  "Connection request timeout. Please try again later.";
+              errorMessage = "Contact Administrator";
+              // errorMessage = "Connection request timeout. Please try again later.";
               break;
             case DioExceptionType.badResponse:
-              errorMessage =
-                  NetworkExceptions.handleResponse(error.response!) ??
-                      "Bad Response";
+              errorMessage = "Contact Administrator";
+              // errorMessage = NetworkExceptions.handleResponse(error.response!) ?? "Bad Response";
               break;
 
             default:
-              errorMessage = "Un Known Error";
+            // errorMessage = "Un Known Error";
+              errorMessage = "Contact Administrator";
           }
         } else if (error is SocketException) {
           errorMessage = "No internet connection.";
         } else {
-          errorMessage = "Unexpected error occurred. Please try again later.";
+          errorMessage = "Contact Administrator";
+          // errorMessage = "Unexpected error occurred. Please try again later.";
         }
         return errorMessage;
       } on FormatException {

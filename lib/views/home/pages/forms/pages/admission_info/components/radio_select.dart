@@ -2,9 +2,10 @@ part of '../view.dart';
 
 class _RadioSelect extends StatefulWidget {
   final String title;
+  final double? titleGap;
   final List<String> list;
 
-  const _RadioSelect({Key? key, required this.title, required this.list}) : super(key: key);
+  const _RadioSelect({Key? key, required this.title, required this.list, this.titleGap}) : super(key: key);
 
   @override
   State<_RadioSelect> createState() => _RadioSelectState();
@@ -15,42 +16,37 @@ class _RadioSelectState extends State<_RadioSelect> {
 
   @override
   Widget build(BuildContext context) {
-    return _Toggle(
-      title: widget.title,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(
-          widget.list.length,
-              (index) => GestureDetector(
-            onTap: () {
-              choose(index);
-            },
-            child: Container(
-              color: Colors.transparent,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Radio(
-                    value: selectedIndex,
-                    groupValue: index,
-                    toggleable: false,
-                    visualDensity: VisualDensity.compact,
-                    onChanged: (value) {
-                      choose(index);
-                    },
-                  ),
-                  Text(widget.list[index])
-                ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.title,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Color(0xff121212),
+          ),
+        ),
+        SizedBox(height: widget.titleGap??20),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: List.generate(
+            widget.list.length,
+            (index) => Padding(
+              padding:  EdgeInsetsDirectional.only(end: 32),
+              child: AppRadio(
+                title: widget.list[index],
+                index: index,
+                selectedIndex: selectedIndex,
+                onChange: (value) {
+                  selectedIndex = value;
+                  setState(() {});
+                },
               ),
             ),
           ),
         ),
-      ),
+      ],
     );
-  }
-
-  void choose(index) {
-    selectedIndex = index;
-    setState(() {});
   }
 }

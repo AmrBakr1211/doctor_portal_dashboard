@@ -16,7 +16,12 @@ class _BowelOrGenitourinaryState extends State<_BowelOrGenitourinary> {
   @override
   void initState() {
     super.initState();
-    list = ["Appliance", widget.isBowel ? "Date Last BM" : "LMP", "Continent", "InContinent"];
+    list = [
+      "Continent",
+      "InContinent",
+      widget.isBowel ? "Date Last BM" : "LMP",
+      "Appliance",
+    ];
   }
 
   String? selectedDate;
@@ -32,59 +37,43 @@ class _BowelOrGenitourinaryState extends State<_BowelOrGenitourinary> {
           (index) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: () {
+              AppRadio(
+                title: list[index],
+                index: index,
+                selectedIndex: selectedIndex,
+                onChange: (value) {
                   selectedDate = null;
-                  choose(index);
+                  selectedIndex = index;
+                  setState(() {});
                 },
-                child: Container(
-                  color: Colors.transparent,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Radio(
-                        value: selectedIndex,
-                        groupValue: index,
-                        toggleable: false,
-                        visualDensity: VisualDensity.compact,
-                        onChanged: (value) {
-                          choose(index);
-                        },
-                      ),
-                      Text(list[index])
-                    ],
-                  ),
-                ),
               ),
-              if (index == 0 && selectedIndex == index)
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: TextFormField(),
+              if (index == 3 && selectedIndex == index)
+                FormInput(
+                  marginBottom: 24,
+                  hintText: "Add note here",
                 ),
-              if (index == 1 && selectedIndex == index)
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: GestureDetector(
-                    onTap: () async {
-                      final result = await showDatePicker(
-                        context: context,
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(
-                          const Duration(
-                            days: 365,
-                          ),
+              if (index == 2 && selectedIndex == index)
+                GestureDetector(
+                  onTap: () async {
+                    final result = await showDatePicker(
+                      context: context,
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(
+                        const Duration(
+                          days: 365,
                         ),
-                      );
-                      if (result != null) {
-                        selectedDate = DateFormat.yMd().format(result);
-                        setState(() {});
-                      }
-                    },
-                    child: AbsorbPointer(
-                      child: TextFormField(
-                        controller: TextEditingController(text: selectedDate),
-                        decoration: const InputDecoration(suffixIcon: Icon(Icons.calendar_month)),
                       ),
+                    );
+                    if (result != null) {
+                      selectedDate = DateFormat.yMd().format(result);
+                      setState(() {});
+                    }
+                  },
+                  child: AbsorbPointer(
+                    child: FormInput(
+                      controller: TextEditingController(text: selectedDate),
+                      marginBottom: 24,
+                      suffixIcon: "calender.svg",
                     ),
                   ),
                 )
@@ -93,10 +82,5 @@ class _BowelOrGenitourinaryState extends State<_BowelOrGenitourinary> {
         ),
       ),
     );
-  }
-
-  void choose(index) {
-    selectedIndex = index;
-    setState(() {});
   }
 }
