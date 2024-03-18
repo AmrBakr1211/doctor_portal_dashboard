@@ -1,13 +1,10 @@
 import 'package:app/core/design/responsive.dart';
 import 'package:app/views/home/components/copyright.dart';
-import 'package:app/views/home/pages/claims/view.dart';
-import 'package:app/views/home/pages/dashboard/view.dart';
 import 'package:app/views/home/pages/soon.dart';
 import 'package:app/views/home/pages/waiting_list/view.dart';
 import 'package:app/views/home/platforms/mobile.dart';
 import 'package:app/views/home/platforms/web.dart';
 import 'package:flutter/material.dart';
-
 import '../../routes.dart';
 import 'components/side_nav_bar.dart';
 import 'components/top_nav_bar/top_nav_bar.dart';
@@ -70,16 +67,12 @@ class _HomeViewState extends State<HomeView> {
   Widget get navigator {
     return Navigator(
       key: navKey,
-      initialRoute: DashBoardPage.route,
+      initialRoute: FormsPage.route,
       reportsRouteUpdateToEngine: true,
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          case DashBoardPage.route:
-            return getPageRoute(const DashBoardPage(), name: DashBoardPage.route);
           case WaitingListPage.route:
             return getPageRoute(const WaitingListPage(), name: WaitingListPage.route);
-          case ClaimsPage.route:
-            return getPageRoute(const ClaimsPage(), name: ClaimsPage.route);
           case SoonView.route:
             final String title = settings.arguments as String;
             return getPageRoute(SoonView(title: title), name: SoonView.route);

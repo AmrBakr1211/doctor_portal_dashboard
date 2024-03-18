@@ -3,8 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../generated/locale_keys.g.dart';
 
 class InputValidator {
-  static final _emailReg =
-      RegExp(r'[a-z]+\d*@[a-z]+\.[a-z]{3}', caseSensitive: false);
+  // static final _emailReg = RegExp(r'[a-z]+\d*@[a-z]+\.[a-z]{3}', caseSensitive: false);
   static final arabicPhoneNumbersReg = RegExp(r"[\u0661-\u0669]");
   static final _arabicTextReg = RegExp(r"[\u0600-\u06ff]+");
   static final _cardNumbersReg = RegExp(r"\d.{4}");

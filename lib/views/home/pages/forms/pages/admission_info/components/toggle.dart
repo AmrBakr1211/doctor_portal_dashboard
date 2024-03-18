@@ -17,6 +17,7 @@ class _ToggleState extends State<_Toggle> {
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
         // color: Colors.grey[100],
+        // color: Colors.red,
         color: Colors.white,
         border: Border.all(color: Color(0xffF5F6FF)),
         borderRadius: BorderRadius.circular(8),

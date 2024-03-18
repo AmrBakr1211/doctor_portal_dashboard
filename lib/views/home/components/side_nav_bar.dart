@@ -1,7 +1,5 @@
 import 'package:app/core/design/app_image.dart';
 import 'package:app/core/design/responsive.dart';
-import 'package:app/views/home/pages/claims/view.dart';
-import 'package:app/views/home/pages/dashboard/view.dart';
 import 'package:app/views/home/pages/forms/view.dart';
 import 'package:app/views/home/pages/waiting_list/view.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +24,9 @@ class SideNavBar extends StatefulWidget {
 
 class _SideNavBarState extends State<SideNavBar> {
   final list = [
-    _Model(title: "Dashboard", icon: "dashboard.svg", route: DashBoardPage.route),
+    _Model(title: "Dashboard", icon: "dashboard.svg", route: SoonView.route),
     _Model(title: "Waiting List", icon: "waiting_list.svg", route: WaitingListPage.route),
-    _Model(title: "Claims", icon: "claims.svg", route: ClaimsPage.route),
+    _Model(title: "Claims", icon: "claims.svg", route: SoonView.route),
     _Model(title: "In-Patient Wards", icon: "in_patient_wards.svg", route: SoonView.route),
     _Model(title: "Emergency Wards", icon: "emergency_wards.svg", route: SoonView.route),
     _Model(title: "Widgets", icon: "widgets.svg", route: SoonView.route),
