@@ -12,8 +12,8 @@ import 'pages/forms/view.dart';
 
 class HomeView extends StatefulWidget {
   static const route = "/home";
-
-  const HomeView({Key? key}) : super(key: key);
+  final Widget? child;
+  const HomeView({Key? key, this.child}) : super(key: key);
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -69,6 +69,7 @@ class _HomeViewState extends State<HomeView> {
       key: navKey,
       initialRoute: FormsPage.route,
       reportsRouteUpdateToEngine: true,
+      // onGenerateRoute: AppRoutes.onGenerateRoute,
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case WaitingListPage.route:
@@ -79,7 +80,7 @@ class _HomeViewState extends State<HomeView> {
           case FormsPage.route:
             return getPageRoute(const FormsPage(), name: FormsPage.route);
           default:
-            return AppRoutes.errorRoute("From Home Navigator${settings.name ?? "NUll"}");
+            return AppRoutes.errorRoute();
         }
       },
     );

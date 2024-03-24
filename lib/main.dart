@@ -1,4 +1,4 @@
-import 'package:app/views/auth/login/view.dart';
+import 'views/login/view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -68,20 +68,21 @@ class _MyAppState extends State<MyApp> {
             },
             builder: (context, state) {
               return MaterialApp(
-                initialRoute: CacheHelper.isAuthed ? HomeView.route : HomeView.route,
+                initialRoute: CacheHelper.isAuthed ? LoginView.route : LoginView.route,
                 navigatorKey: navigatorKey,
-                onGenerateRoute: (settings) {
-                  return getPageRoute(const HomeView(), name: HomeView.route);
-                  // return getPageRoute(const LoginView(), name: LoginView.route);
-                  switch (settings.name) {
-                    case LoginView.route:
-                      return getPageRoute(const LoginView(), name: LoginView.route);
-                    case HomeView.route:
-                      return getPageRoute(const HomeView(), name: HomeView.route);
-                    default:
-                      return AppRoutes.errorRoute("From Main Navigator${settings.name ?? "NUll"}");
-                  }
-                },
+                onGenerateRoute: AppRoutes.onGenerateRoute,
+                // onGenerateRoute: (settings) {
+                //   // return getPageRoute(const HomeView(), name: HomeView.route);
+                //   // return getPageRoute(const LoginView(), name: LoginView.route);
+                //   switch (settings.name) {
+                //     case LoginView.route:
+                //       return getPageRoute(const LoginView(), name: LoginView.route);
+                //     case HomeView.route:
+                //       return getPageRoute(const HomeView(), name: HomeView.route);
+                //     default:
+                //       return AppRoutes.errorRoute("From Main Navigator${settings.name ?? "NUll"}");
+                //   }
+                // },
                 title: context.locale.languageCode == "en" ? 'Doctor Portal' : "مستشفى عبد اللطيف جميل",
                 debugShowCheckedModeBanner: false,
                 localizationsDelegates: context.localizationDelegates,

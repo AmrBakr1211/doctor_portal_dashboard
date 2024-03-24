@@ -13,14 +13,9 @@ part 'components/header.dart';
 
 part 'components/item/item.dart';
 
-// part 'components/body/tablet.dart';
-//
-// part 'components/body/web.dart';
-//
-// part 'components/body/body.dart';
 
 class WaitingListPage extends StatefulWidget {
-  static const route = "/waitingList";
+  static const route = "/home/waitingList";
 
   const WaitingListPage({Key? key}) : super(key: key);
 

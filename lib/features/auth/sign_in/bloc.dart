@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/logic/cache_helper.dart';
 import '../../../core/logic/dio_helper.dart';
 import '../../../core/logic/helper_methods.dart';
+import '../../../generated/locale_keys.g.dart';
 import '../../../views/home/view.dart';
 
 part 'events.dart';
@@ -50,6 +52,20 @@ class SignInBloc extends Bloc<SignInEvents, SignInStates> {
     } else {
       validateMode = AutovalidateMode.onUserInteraction;
     }
+  }
+
+  String? validateUserId(String? value) {
+    if (value!.isEmpty) {
+      return LocaleKeys.userIdMustBeNotEmpty.tr();
+    }
+    return null;
+  }
+
+  String? validatePassword(String? value) {
+    if (value!.isEmpty) {
+      return LocaleKeys.passwordMustBeNotEmpty.tr();
+    }
+    return null;
   }
 
 }

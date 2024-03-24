@@ -5,7 +5,7 @@ class _QRCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
+    return Row(
       children: [
         Text(
           "ADMISSION Number # 23521336",
@@ -19,32 +19,7 @@ class _QRCode extends StatelessWidget {
           onTap: () {
             showDialog(
               context: context,
-              builder: (context) => SimpleDialog(
-                contentPadding: EdgeInsets.all(24),
-                backgroundColor: Color(0xffEBEBEB),
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(Icons.clear),
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                    decoration: BoxDecoration(color: Color(0xffF9F9F9), borderRadius: BorderRadius.circular(8)),
-                    child: Text("Scan QR Code (Admission ID)"),
-                  ),
-                  SizedBox(height: 24),
-                  AppImage(
-                    "https://cdn.britannica.com/17/155017-050-9AC96FC8/Example-QR-code.jpg",
-                    height: 200,
-                  )
-                ],
-              ),
+              builder: (context) => ScanQRDialog(),
             );
           },
           child: AppImage("qr_code.svg"),

@@ -5,8 +5,7 @@ class AppButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPress;
 
-  const AppButton(
-      {super.key, this.isLoading = false, required this.text, this.onPress});
+  const AppButton({super.key, this.isLoading = false, required this.text, this.onPress});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,11 @@ class AppButton extends StatelessWidget {
           ? const SizedBox(
               height: 25,
               width: 25,
-              child: CircularProgressIndicator(strokeWidth: 2))
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: Colors.white,
+              ),
+            )
           : const SizedBox(),
       label: Text(text),
     );

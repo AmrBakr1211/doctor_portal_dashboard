@@ -114,9 +114,13 @@ class _AppInputState extends State<AppInput> {
                       child: Container(
                         color: Colors.transparent,
                         margin: EdgeInsetsDirectional.only(end: 3.w),
-                        child: AppImage(
-                          "visibility.svg",
-                          color: isPasswordShown ? Theme.of(context).primaryColor : null,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: AppImage(
+                            "view_data.svg",
+                            fit: BoxFit.fill,
+                            color: isPasswordShown ? Theme.of(context).primaryColor : Colors.white,
+                          ),
                         ),
                       ),
                       onTap: () {

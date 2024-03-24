@@ -18,6 +18,15 @@ class AppTheme {
           onBackground: primary,
           primary: primary,
         ),
+        radioTheme: RadioThemeData(
+          fillColor: MaterialStateColor.resolveWith((states) {
+            if (states.contains(MaterialState.selected)) {
+              return Colors.blue; // Change selected color
+            }
+            return Color(0xff8A99AA); // Change unselected color
+          }),
+
+        ),
         inputDecorationTheme: InputDecorationTheme(
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
           border: OutlineInputBorder(
@@ -57,15 +66,15 @@ class AppTheme {
 
         filledButtonTheme: FilledButtonThemeData(
           style: FilledButton.styleFrom(
-            fixedSize: Size.fromHeight(80.h),
-            disabledForegroundColor: primary.withOpacity(.5),
+            fixedSize: Size.fromHeight(53),
+            disabledForegroundColor: Colors.white.withOpacity(.56),
             textStyle: const TextStyle(
               color: primary,
               fontSize: 16,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               fontFamily: fontFamily,
             ),
-            disabledBackgroundColor: primary.withOpacity(.05),
+            disabledBackgroundColor: primary.withOpacity(.12),
             // shape: RoundedRectangleBorder(
             //     borderRadius: BorderRadius.circular(15.r)),
           ),

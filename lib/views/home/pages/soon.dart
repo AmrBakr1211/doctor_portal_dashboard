@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 class SoonView extends StatelessWidget {
-  static const route = "/soon";
+  static const route = "/home/soon";
   final String title;
   const SoonView({Key? key, required this.title}) : super(key: key);
 

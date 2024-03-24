@@ -4,6 +4,7 @@ import 'package:app/core/design/responsive.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../dialogs/scan_qr.dart';
 import 'components/input.dart';
 
 part 'components/admitted.dart';

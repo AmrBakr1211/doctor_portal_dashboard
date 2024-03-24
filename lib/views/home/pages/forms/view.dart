@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'pages/admission_info/view.dart';
 
 class FormsPage extends StatefulWidget {
-  static const route = "/forms";
+  static const route = "/home/forms";
 
   const FormsPage({Key? key}) : super(key: key);
 

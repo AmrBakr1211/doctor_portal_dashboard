@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:quick_log/quick_log.dart';
 
-import '../../views/auth/login/view.dart';
+import '../../views/login/view.dart';
 import 'cache_helper.dart';
 import 'helper_methods.dart';
 
